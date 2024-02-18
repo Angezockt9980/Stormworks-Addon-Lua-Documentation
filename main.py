@@ -26,7 +26,7 @@ def generate_index_html(input_folder, output_folder):
     output_file = os.path.join(output_folder, "index.html")
     with open(output_file, 'w') as f:
         # Write HTML header
-        f.write("<!DOCTYPE html>\n<html>\n<head>\n<title>Stormworks Addon Markdown Documentation</title>\n")
+        f.write("<!DOCTYPE html>\n<html>\n<head>\n<title>Stormworks Addon Lua Documentation</title>\n")
         f.write("<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/atom-one-dark.min.css'>\n")
         f.write("<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js'></script>\n")
         f.write("<script>hljs.highlightAll();</script>\n")
