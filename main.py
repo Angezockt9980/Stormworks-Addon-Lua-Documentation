@@ -1,20 +1,25 @@
 import os
+import re
 
 def highlight_lua_code(content):
+    # Regular expression to match Lua code blocks
+    lua_code_blocks = re.findall(r'```lua\s*(.*?)\s*```', content, re.DOTALL)
+
     highlighted_content = ""
-    code_block = False
-    for line in content.split('\n'):
-        if line.strip() == "```":
-            if code_block:
-                highlighted_content += "</code></pre>\n"
-                code_block = False
-            else:
-                highlighted_content += "<pre><code class='hljs lua'>"
-                code_block = True
-        elif code_block:
-            highlighted_content += line + "\n"
-        else:
-            highlighted_content += line + "<br>\n"  # Preserve line breaks outside code blocks
+    last_index = 0
+    for lua_code_block in lua_code_blocks:
+        start_index = content.find(f'```lua\n{lua_code_block}\n```', last_index)
+        if start_index > last_index:
+            # Append the normal text before the Lua code block
+            highlighted_content += f"<p>{content[last_index:start_index]}</p>\n"
+        # Highlight the Lua code block
+        highlighted_content += f"<pre><code class='hljs lua'>{lua_code_block}</code></pre>\n"
+        last_index = start_index + len(f'```lua\n{lua_code_block}\n```')
+
+    # Append any remaining normal text after the last Lua code block
+    if last_index < len(content):
+        highlighted_content += f"<p>{content[last_index:]}</p>\n"
+
     return highlighted_content
 
 def generate_index_html(input_folder, output_folder):
@@ -31,26 +36,24 @@ def generate_index_html(input_folder, output_folder):
         f.write("#content { margin-left: 240px; padding: 20px; }\n")
         f.write("#about { position: absolute; bottom: 10px; left: 10px; color: #abb2bf; }\n")
         f.write("a { display: block; margin-bottom: 10px; text-decoration: none; color: #abb2bf; }\n")
-        f.write("a:hover { color: #fff; }\n")
+        f.write(".selected { background-color: #1e2127; padding: 5px; border-radius: 5px; }\n")  # Background color for selected buttons
+        f.write("a:hover { color: #fff; }\n")  # Change color on hover
         f.write("h2 { font-size: 24px; margin-bottom: 5px; }\n")
-        f.write("pre { background-color: #1e2127; padding: 5px; border-radius: 5px; }\n")
+        f.write("pre { background-color: #1e2127; padding: 5px; border-radius: 5px; margin-top: -15px}\n")
         f.write("code { white-space: pre-wrap; }\n")  # Enforce text wrapping
         f.write("</style>\n")
         f.write("</head>\n<body>\n")
 
         # Write navigation menu
         f.write("<div id='nav'>\n")
-        f.write("<h2 style='color: #abb2bf; margin-bottom: 20px;'>Navigation</h2>\n<ul>\n")
+        f.write("<h2 style='color: #abb2bf; margin-bottom: 20px;'>Navigation</h2>\n")
         for file_name in os.listdir(input_folder):
             if file_name.endswith(".md"):
                 file_path = os.path.join(input_folder, file_name)
+                with open(file_path, 'r') as markdown_file:
+                    file_content = markdown_file.read()
                 name = file_name.replace(".md", "").capitalize()
-                f.write(f"<li><a href='#{file_name.replace(' ', '%20')}'>{name}</a></li>\n")
-        f.write("</ul>\n")
-        f.write("<div id='about'>\n")
-        f.write("<h2 style='color: #abb2bf; margin-bottom: 10px;'>About</h2>\n")
-        f.write("<p style='font-size: 14px;'>Stormworks Addon Markdown Documentation. Created by angezockt9980 with the help of fabi123. <a href='https://discord.gg/s4YSHf5qGt' style='color: #abb2bf; text-decoration: underline;'>https://discord.gg/s4YSHf5qGt</a></p>\n")
-        f.write("</div>\n")
+                f.write(f"<a href='#{file_name.replace(' ', '%20')}' style='color: #abb2bf;'>{name}</a>\n")
         f.write("</div>\n")
 
         # Write content for each markdown file in the input folder
@@ -67,21 +70,43 @@ def generate_index_html(input_folder, output_folder):
                 f.write("<hr>\n")
         f.write("</div>\n")
 
-        # Write JavaScript for smooth scrolling
+        # Write JavaScript for smooth scrolling and button highlighting
         f.write("<script>\n")
         f.write("document.addEventListener('DOMContentLoaded', function() {\n")
-        f.write("    document.querySelectorAll('a').forEach(anchor => {\n")
-        f.write("        anchor.addEventListener('click', function(e) {\n")
+        f.write("    const sections = document.querySelectorAll('h2');\n")
+        f.write("    const navLinks = document.querySelectorAll('#nav a');\n")
+        f.write("    window.addEventListener('scroll', () => {\n")
+        f.write("        let current = '';\n")
+        f.write("        sections.forEach(section => {\n")
+        f.write("            const sectionTop = section.offsetTop;\n")
+        f.write("            if (pageYOffset >= sectionTop - 200) {\n")  # Adjusted for accurate scrolling
+        f.write("                current = section.getAttribute('id');\n")
+        f.write("            }\n")
+        f.write("        });\n")
+        f.write("        navLinks.forEach(link => {\n")
+        f.write("            link.classList.remove('selected');\n")
+        f.write("            if (link.getAttribute('href').substring(1) === current) {\n")
+        f.write("                link.classList.add('selected');\n")
+        f.write("            }\n")
+        f.write("        });\n")
+        f.write("    });\n")
+
+        # Smooth scrolling
+        f.write("    navLinks.forEach(link => {\n")
+        f.write("        link.addEventListener('click', (e) => {\n")
         f.write("            e.preventDefault();\n")
-        f.write("            const targetId = this.getAttribute('href').substring(1);\n")
+        f.write("            const targetId = link.getAttribute('href').substring(1);\n")
         f.write("            const targetElement = document.getElementById(targetId);\n")
         f.write("            if (targetElement) {\n")
-        f.write("                targetElement.scrollIntoView({\n")
+        f.write("                const offset = targetElement.getBoundingClientRect().top + window.pageYOffset;\n")
+        f.write("                window.scrollTo({\n")
+        f.write("                    top: offset, // Adjust as needed\n")
         f.write("                    behavior: 'smooth'\n")
         f.write("                });\n")
         f.write("            }\n")
         f.write("        });\n")
         f.write("    });\n")
+
         f.write("});\n")
         f.write("</script>\n")
 
@@ -89,8 +114,8 @@ def generate_index_html(input_folder, output_folder):
         f.write("</body>\n</html>")
 
 if __name__ == "__main__":
-    input_folder = "E:/Stormworks Documentation/manual2"  # Change this to the path of your input folder containing .md files
-    output_folder = "E:/Stormworks Documentation/Code/Stormworks Addon Lua Documentation"  # Change this to the desired output folder
+    input_folder = "E:\Stormworks Documentation\manual3"  # Change this to the path of your input folder containing .md files
+    output_folder = "E:\Stormworks Documentation\Stormworks Addon Lua Documentation\Website"  # Change this to the desired output folder
 
     generate_index_html(input_folder, output_folder)
-    print("index2.html generated successfully.")
+    print("index.html generated successfully.")
