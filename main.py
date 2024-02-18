@@ -44,7 +44,8 @@ def generate_index_html(input_folder, output_folder):
         f.write("</style>\n")
         f.write("</head>\n<body>\n")
 
-        # Write navigation menu
+        # Write navigation menu and About section container
+        f.write("<div id='nav-container'>\n")
         f.write("<div id='nav'>\n")
         f.write("<h2 style='color: #abb2bf; margin-bottom: 20px;'>Navigation</h2>\n")
         for file_name in os.listdir(input_folder):
@@ -54,7 +55,16 @@ def generate_index_html(input_folder, output_folder):
                     file_content = markdown_file.read()
                 name = file_name.replace(".md", "").capitalize()
                 f.write(f"<a href='#{file_name.replace(' ', '%20')}' style='color: #abb2bf;'>{name}</a>\n")
+
+        # Write About section inside the nav container
+        f.write("<div id='about'>\n")
+        f.write("<h2 style='color: #abb2bf; margin-bottom: 10px;'>Credits</h2>\n")
+        f.write("Developed by angezockt9980 with the help of fabi123.<br/>\n")  # Replace "Your Name" with your actual name
+        f.write("For support and updates, join our Discord Server! <a href='https://discord.gg/s4YSHf5qGt' target='_blank'>https://discord.gg/s4YSHf5qGt</a></p>\n")  # Replace "https://discord.gg/example" with your actual Discord invite link
         f.write("</div>\n")
+
+        f.write("</div>\n")  # Close nav
+        f.write("</div>\n")  # Close nav-container
 
         # Write content for each markdown file in the input folder
         f.write("<div id='content'>\n")
