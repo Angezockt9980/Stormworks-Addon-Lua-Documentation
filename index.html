@@ -46,7 +46,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             background-color: var(--background);
-            color: #abb2bf;
+            color: var(--text);
         }
 
         #nav {
@@ -69,14 +69,14 @@
             position: absolute;
             bottom: 10px;
             left: 10px;
-            color: #abb2bf;
+            color: var(--text);
         }
 
         a {
             display: block;
             margin-bottom: 10px;
             text-decoration: none;
-            color: #abb2bf;
+            color: var(--text);
         }
 
         .selected {
@@ -113,21 +113,21 @@
 
         <div id='nav-container'>
             <div id='nav'>
-                <h2 style='color: #abb2bf; margin-bottom: 20px;'>Navigation</h2>
-                <a href='#addon.md' style='color: #abb2bf;'>Addon</a>
-                <a href='#ai.md' style='color: #abb2bf;'>Ai</a>
-                <a href='#callback.md' style='color: #abb2bf;'>Callback</a>
-                <a href='#chat.md' style='color: #abb2bf;'>Chat</a>
-                <a href='#examples.md' style='color: #abb2bf;'>Examples</a>
-                <a href='#game.md' style='color: #abb2bf;'>Game</a>
-                <a href='#general.md' style='color: #abb2bf;'>General</a>
-                <a href='#matrix.md' style='color: #abb2bf;'>Matrix</a>
-                <a href='#misc.md' style='color: #abb2bf;'>Misc</a>
-                <a href='#objects.md' style='color: #abb2bf;'>Objects</a>
-                <a href='#vehicles.md' style='color: #abb2bf;'>Vehicles</a>
+                <h2 style='color: var(--text); margin-bottom: 20px;'>Navigation</h2>
+                <a href='#addon.md' style='color: var(--text);'>Addon</a>
+                <a href='#ai.md' style='color: var(--text);'>Ai</a>
+                <a href='#callback.md' style='color: var(--text);'>Callback</a>
+                <a href='#chat.md' style='color: var(--text);'>Chat</a>
+                <a href='#examples.md' style='color: var(--text);'>Examples</a>
+                <a href='#game.md' style='color: var(--text);'>Game</a>
+                <a href='#general.md' style='color: var(--text);'>General</a>
+                <a href='#matrix.md' style='color: var(--text);'>Matrix</a>
+                <a href='#misc.md' style='color: var(--text);'>Misc</a>
+                <a href='#objects.md' style='color: var(--text);'>Objects</a>
+                <a href='#vehicles.md' style='color: var(--text);'>Vehicles</a>
 
                 <div id='about'>
-                    <h2 style='color: #abb2bf; margin-bottom: 10px;'>Credits</h2>
+                    <h2 style='color: var(--text); margin-bottom: 10px;'>Credits</h2>
                     Developed by angezockt9980 with the help of fabi123.<br />
                     For support and updates, join our Discord Server! <a href='https://discord.gg/s4YSHf5qGt'
                         target='_blank'>https://discord.gg/s4YSHf5qGt</a></p>
@@ -137,7 +137,7 @@
         </div>
 
         <div id='content'>
-            <h2 id='addon.md' style='color: #abb2bf; margin-bottom: 5px;'>Addon</h2>
+            <h2 id='addon.md' style='color: var(--text); margin-bottom: 5px;'>Addon</h2>
             <p>Get the internal index of this addon
 
             </p>
@@ -301,7 +301,7 @@ ZONE_TYPE |
 
             </p>
             <hr>
-            <h2 id='ai.md' style='color: #abb2bf; margin-bottom: 5px;'>Ai</h2>
+            <h2 id='ai.md' style='color: var(--text); margin-bottom: 5px;'>Ai</h2>
             <p>Lua AI can be run on any character, and their resulting actions are dictated by their state and the AI
                 Type of the seat they are attached to.
 
@@ -415,7 +415,7 @@ Trigger = Designate</code></pre>
 
             </p>
             <hr>
-            <h2 id='callback.md' style='color: #abb2bf; margin-bottom: 5px;'>Callback</h2>
+            <h2 id='callback.md' style='color: var(--text); margin-bottom: 5px;'>Callback</h2>
             <p>Listed below are callback functions that can be added to a script and are automatically called when their
                 specific conditions are met, the simplest callback function is onTick which is automatically called
                 every game tick.
@@ -712,7 +712,7 @@ Trigger = Designate</code></pre>
 
             </p>
             <hr>
-            <h2 id='chat.md' style='color: #abb2bf; margin-bottom: 5px;'>Chat</h2>
+            <h2 id='chat.md' style='color: var(--text); margin-bottom: 5px;'>Chat</h2>
             <p>Sends a chat message. peer_id is optional and defaults to -1 for all peers. Announce mssages are not
                 handled as commands.
 
@@ -892,7 +892,7 @@ MARKER_TYPE |
 
             </p>
             <hr>
-            <h2 id='examples.md' style='color: #abb2bf; margin-bottom: 5px;'>Examples</h2>
+            <h2 id='examples.md' style='color: var(--text); margin-bottom: 5px;'>Examples</h2>
             <p>The following examples show ways to use the API to accomplish simple tasks. For more advanced examples;
                 the default addon scripts showcase a wide array of lua techniques. Additional help is available in the
                 official discord.
@@ -1000,7 +1000,7 @@ end</code></pre>
 
             </p>
             <hr>
-            <h2 id='game.md' style='color: #abb2bf; margin-bottom: 5px;'>Game</h2>
+            <h2 id='game.md' style='color: var(--text); margin-bottom: 5px;'>Game</h2>
             <p>Attempts to spawn a tsunami epicentered at the target transform, only one tsunami/whirlpool can be active
                 at a time; stronger events will override weaker ones. Magnitude ranges from 0-1.
 
@@ -1310,7 +1310,7 @@ AUDIO_MOOD |
 
             </p>
             <hr>
-            <h2 id='general.md' style='color: #abb2bf; margin-bottom: 5px;'>General</h2>
+            <h2 id='general.md' style='color: var(--text); margin-bottom: 5px;'>General</h2>
             <p>Default Game Commands
 
                 The following commands can be called at any time and are built into the game:
@@ -1431,7 +1431,7 @@ end</code></pre>
 
             </p>
             <hr>
-            <h2 id='matrix.md' style='color: #abb2bf; margin-bottom: 5px;'>Matrix</h2>
+            <h2 id='matrix.md' style='color: var(--text); margin-bottom: 5px;'>Matrix</h2>
             <p>Stormworks provides a limited set of matrix functions that are useful for transforming positions of
                 objects in scripts:
 
@@ -1524,7 +1524,7 @@ end</code></pre>
 
             </p>
             <hr>
-            <h2 id='misc.md' style='color: #abb2bf; margin-bottom: 5px;'>Misc</h2>
+            <h2 id='misc.md' style='color: var(--text); margin-bottom: 5px;'>Misc</h2>
             <p>Main Menu Properties
 
                 The following functions will add editable UI elements to the Addon script selector when starting a new
@@ -1665,7 +1665,7 @@ end</code></pre>
 
             </p>
             <hr>
-            <h2 id='objects.md' style='color: #abb2bf; margin-bottom: 5px;'>Objects</h2>
+            <h2 id='objects.md' style='color: var(--text); margin-bottom: 5px;'>Objects</h2>
             <p>Player
 
                 Returns a table containing info on all connected players.
@@ -2235,7 +2235,7 @@ Fish
 
             </p>
             <hr>
-            <h2 id='vehicles.md' style='color: #abb2bf; margin-bottom: 5px;'>Vehicles</h2>
+            <h2 id='vehicles.md' style='color: var(--text); margin-bottom: 5px;'>Vehicles</h2>
             <p>Spawns a vehicle component from a specific addon. See getLocationComponentData() for info on how to get
                 component_id. group_vehicles is a table listing all vehicle ids in this group.
 
